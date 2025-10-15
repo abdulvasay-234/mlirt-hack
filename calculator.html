@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Calculator</title>
+    <style>
+        body {
+            background: #f3f3f3;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }
+        .calculator {
+            background: #fff;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            width: 320px;
+        }
+        .display {
+            width: 100%;
+            height: 48px;
+            background: #222;
+            color: #fff;
+            font-size: 2em;
+            text-align: right;
+            border-radius: 6px;
+            margin-bottom: 18px;
+            padding: 8px 12px;
+            box-sizing: border-box;
+            overflow-x: auto;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        .buttons button {
+            height: 48px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 6px;
+            background: #e3e3e3;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .buttons button.operator {
+            background: #ffb84d;
+            color: #fff;
+        }
+        .buttons button.equal {
+            background: #4caf50;
+            color: #fff;
+            grid-column: span 2;
+        }
+        .buttons button.clear {
+            background: #f44336;
+            color: #fff;
+        }
+        .buttons button:active {
+            background: #bdbdbd;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="display" id="display">0</div>
+        <div class="buttons">
+            <button class="clear" onclick="clearDisplay()">C</button>
+            <button onclick="appendToDisplay('(')">(</button>
+            <button onclick="appendToDisplay(')')">)</button>
+            <button class="operator" onclick="appendToDisplay('/')">÷</button>
+
+            <button onclick="appendToDisplay('7')">7</button>
+            <button onclick="appendToDisplay('8')">8</button>
+            <button onclick="appendToDisplay('9')">9</button>
+            <button class="operator" onclick="appendToDisplay('*')">×</button>
+
+            <button onclick="appendToDisplay('4')">4</button>
+            <button onclick="appendToDisplay('5')">5</button>
+            <button onclick="appendToDisplay('6')">6</button>
+            <button class="operator" onclick="appendToDisplay('-')">−</button>
+
+            <button onclick="appendToDisplay('1')">1</button>
+            <button onclick="appendToDisplay('2')">2</button>
+            <button onclick="appendToDisplay('3')">3</button>
+            <button class="operator" onclick="appendToDisplay('+')">+</button>
+
+            <button onclick="appendToDisplay('0')">0</button>
+            <button onclick="appendToDisplay('.')">.</button>
+            <button class="equal" onclick="calculateResult()">=</button>
+        </div>
+    </div>
+    <script>
+        let display = document.getElementById('display');
+        let currentInput = '0';
+
+        function appendToDisplay(value) {
+            if (currentInput === '0' && value !== '.') {
+                currentInput = value;
+            } else {
+                currentInput += value;
+            }
+            display.textContent = currentInput;
+        }
+
+        function clearDisplay() {
+            currentInput = '0';
+            display.textContent = currentInput;
+        }
+
+        function calculateResult() {
+            try {
+                // Evaluate the expression safely
+                // eslint-disable-next-line no-eval
+                let result = eval(currentInput);
+                display.textContent = result;
+                currentInput = String(result);
+            } catch (e) {
+                display.textContent = 'Error';
+                currentInput = '0';
+            }
+        }
+    </script>
+</body>
+</html>
